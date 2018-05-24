@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import fns from '../utils/functions';
 
 export default class Password extends Component {
     constructor(props) {
@@ -22,12 +23,35 @@ export default class Password extends Component {
         })
     }
 
-    createPassword() {
-        if (this.usernameCheck(this.state.username) && this.passwordCheck(this.state.password)) {
-            alert('Username and password updated')
-        } else {
-            alert('Please follow instructions when creating a username and password')
+    validateUsername(username) {
+        let flag = true;
+        
+        if(!username) {
+            flag = false;
         }
+        // if any of my tests fail, set the flag to false
+        if(username.length < 6) {
+            flag = false;
+        }
+        if(username.indexOf(' ') !== -1) {
+            flag = false;
+        }
+        // Ways to check for spaces: 
+
+        // contains ' '
+        // split(' ') - only one element.
+        // .indexOf(' ') --> -1
+
+        return flag;
+    }
+
+    createPassword() {
+        if(fns.validateUsername(this.state.username)) {
+            alert('Password created')
+        } else {
+            alert('Invalid credentials.')
+        }
+        
     }
 
     render() {
